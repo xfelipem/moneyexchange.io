@@ -1,10 +1,5 @@
 import { Responsive } from "semantic-ui-react"
 
-export const calculateMoneyExchange = (baseCurrency, targetCurrency) => {
-  const integerResult = baseCurrency.integerValue * targetCurrency.integerValue;
-  const decimalResult = integerResult
-}
-
 export const transformDecimalsToInteger = (stringCurrency) => {
   return {
     integerValue: stringCurrency
@@ -62,13 +57,9 @@ export const validateMinuteDifference = (maxMinuts, timestamp, newTimestamp) => 
 
   return difference >= maxMinuts;
 };
-// Heads up!
-// We using React Static to prerender our docs with server side rendering, this is a quite simple solution.
-// For more advanced usage please check Responsive docs under the "Usage" section.
-export const getWidth = () => {
-  const isSSR = typeof window === 'undefined'
 
-  return isSSR ? Responsive.onlyTablet.minWidth : window.innerWidth
+export const getWidth = () => {
+  return Responsive.onlyTablet.minWidth;
 }
 
 export default {
