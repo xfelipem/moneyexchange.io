@@ -6,14 +6,14 @@ import { Form } from 'semantic-ui-react';
 
 Enzyme.configure({ adapter: new Adapter() });
 
-test('MoneyExchange changes the target currency input after click', () => {
+test('€1000 Should be converted to $1106.55', () => {
   // Render a checkbox with label in the document
   const moneyExchange = shallow(<MoneyExchange />);
 
   moneyExchange.find(Form.Input).first().simulate('change', {
-    target: { value: '100,2339' }
+    target: { value: '1000' }
   });
   moneyExchange.find(Form.Button).simulate('click');
 
-  expect(moneyExchange.find(Form.Input)[1]).toEqual('110.570019768');
+  expect(moneyExchange.find(Form.Input).get(1).props.value).toEqual('$1106.55');
 });
