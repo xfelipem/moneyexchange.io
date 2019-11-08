@@ -6,6 +6,7 @@ import {
   getReversedDecimalIndex,
   reverseString
 } from '../helpers';
+import MoneyHelper from '../helpers/money'
 import { moneyExchangeReducer, moneyExchangeInitialState } from '../state/reducers';
 import { moneyExchangeActions } from '../state/actions';
 import fetchRates from '../state/fetchers';
@@ -21,6 +22,7 @@ const MoneyExchange = () => {
     baseRate,
     baseDecimalCharacter,
     baseInputValue,
+    rates,
     ratesTimestamp,
     targetCurrency,
     targetRate,
@@ -57,41 +59,54 @@ const MoneyExchange = () => {
     const isbaseEmpty = baseInputValue === '';
 
     if (!hasError && !isbaseEmpty) {
-      const baseDecimalQuantity = getReversedDecimalIndex(baseInputValue, baseDecimalCharacter);
-      const baseRateDecimalAmount = getReversedDecimalIndex(baseRate, targetDecimalCharacter);
-      const exchangeDecimalQuantity = getReversedDecimalIndex(targetRate, targetDecimalCharacter);
+      const targetValue = MoneyHelper.convert(baseInputValue, targetCurrency, rates);
+      // .then((dinero) => {
+      const reversed = reverseString(`${targetValue.amount}`);
 
-      const normalizedDecimalQuantity = Math.max.apply(null,
-        [baseDecimalQuantity, baseRateDecimalAmount, exchangeDecimalQuantity]
-          .map(stringNumber => parseFloat(stringNumber))
+      const amountWithDecimals = reverseString(
+        reversed.slice(0, targetValue.precision - 1) + '.' + reversed.slice(targetValue.precision - 1)
       );
 
-      const baseDecimalDiff = normalizedDecimalQuantity - baseDecimalQuantity;
-      const baseRateDecimalDiff = baseDecimalDiff;
-      const targetRateDecimalDiff = normalizedDecimalQuantity - exchangeDecimalQuantity;
-
-      const integerBaseValue = parseFloat(baseInputValue.replace(baseDecimalCharacter, '') + '0'.repeat(baseDecimalDiff));
-      const integerBaseRate = parseFloat(`${baseRate}`.replace(baseDecimalCharacter, '') + '0'.repeat(baseRateDecimalDiff));
-      const integerTargetRate = parseFloat(`${targetRate}`.replace(targetDecimalCharacter, '') + '0'.repeat(targetRateDecimalDiff));
-
-      const integerBaseFinalValue = integerBaseValue * integerBaseRate;
-      const integerExchangeCurrencyValue = integerBaseFinalValue * integerTargetRate;
-
-      const finalDecimalCharacterPossiton = (baseDecimalDiff * baseRateDecimalDiff * (targetRateDecimalDiff || 1) - 2);
-      const reversedExchangeCurrency = reverseString(`${integerExchangeCurrencyValue}`);
-      const exchangeValue = reverseString(
-        reversedExchangeCurrency
-          .substr(0, finalDecimalCharacterPossiton) + targetDecimalCharacter + reversedExchangeCurrency.substr(finalDecimalCharacterPossiton)
-      );
+      console.log({ amountWithDecimals, targetValue });
 
 
-      console.log({
-        baseDecimalDiff, baseRateDecimalDiff, targetRateDecimalDiff,
-        finalDecimalCharacterPossiton, exchangeValue
-      });
+      dispatch(moneyExchangeActions.setTargetValue(amountWithDecimals))
+      // });
+      // const baseDecimalQuantity = getReversedDecimalIndex(baseInputValue, baseDecimalCharacter);
+      // const baseRateDecimalAmount = getReversedDecimalIndex(baseRate, targetDecimalCharacter);
+      // const exchangeDecimalQuantity = getReversedDecimalIndex(targetRate, targetDecimalCharacter);
+
+      // const normalizedDecimalQuantity = Math.max.apply(null,
+      //   [baseDecimalQuantity, baseRateDecimalAmount, exchangeDecimalQuantity]
+      //     .map(stringNumber => parseFloat(stringNumber))
+      // );
+
+      // const baseDecimalDiff = normalizedDecimalQuantity - baseDecimalQuantity;
+      // const baseRateDecimalDiff = baseDecimalDiff;
+      // const targetRateDecimalDiff = normalizedDecimalQuantity - exchangeDecimalQuantity;
+
+      // const integerBaseValue = parseFloat(baseInputValue.replace(baseDecimalCharacter, '') + '0'.repeat(baseDecimalDiff));
+      // const integerBaseRate = parseFloat(`${baseRate}`.replace(baseDecimalCharacter, '') + '0'.repeat(baseRateDecimalDiff));
+      // const integerTargetRate = parseFloat(`${targetRate}`.replace(targetDecimalCharacter, '') + '0'.repeat(targetRateDecimalDiff));
+
+      // const integerBaseFinalValue = integerBaseValue * integerBaseRate;
+      // const integerExchangeCurrencyValue = integerBaseFinalValue * integerTargetRate;
+
+      // const finalDecimalCharacterPossiton = (baseDecimalDiff * baseRateDecimalDiff * (targetRateDecimalDiff || 1) - 2);
+      // const reversedExchangeCurrency = reverseString(`${integerExchangeCurrencyValue}`);
+      // const exchangeValue = reverseString(
+      //   reversedExchangeCurrency
+      //     .substr(0, finalDecimalCharacterPossiton) + targetDecimalCharacter + reversedExchangeCurrency.substr(finalDecimalCharacterPossiton)
+      // );
 
 
-      dispatch(moneyExchangeActions.setTargetValue(exchangeValue))
+      // console.log({
+      //   baseDecimalDiff, baseRateDecimalDiff, targetRateDecimalDiff,
+      //   finalDecimalCharacterPossiton, exchangeValue
+      // });
+
+
+
     }
   };
 
