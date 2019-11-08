@@ -1,5 +1,5 @@
 import React, { useEffect, useReducer, Profiler } from 'react';
-import { Segment, Grid, Form, Dimmer, Loader } from 'semantic-ui-react';
+import { Segment, Grid, Form } from 'semantic-ui-react';
 import {
   validateNumericWithDecimals,
   validateDecimalQuantity,
