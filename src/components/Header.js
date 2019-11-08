@@ -1,15 +1,15 @@
 import PropTypes from 'prop-types'
 import React from 'react';
 import { Header, Container } from 'semantic-ui-react';
-/* eslint-disable react/no-multi-comp */
-/* Heads up! HomepageHeading uses inline styling, however it's not the best practice. Use CSS or styled components for
- * such things.
- */
+import appConfig from '../mocks/configuration';
+
+const { landing } = appConfig;
+
 const LandingHeader = ({ mobile }) => (
   <Container text>
     <Header
       as='h1'
-      content='Imagine-a-Company'
+      content={landing.title}
       inverted
       style={{
         fontSize: mobile ? '2em' : '3em',

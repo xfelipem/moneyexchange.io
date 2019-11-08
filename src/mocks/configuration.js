@@ -1,4 +1,7 @@
 export default {
+  landing:{
+    title: 'Money Exchange'
+  },
   exchange: {
     API_ACCESS_KEY: '33b23d6e01efe285daf21f65e1124757',
     API_RESPONSE_LIFE: 10,
