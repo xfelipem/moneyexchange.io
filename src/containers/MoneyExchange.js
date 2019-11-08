@@ -14,17 +14,15 @@ const MoneyExchange = () => {
 
   const {
     hasError,
-    isFetching,
     error,
     baseCurrency,
     baseRate,
     baseDecimalCharacter,
     baseInputValue,
-    rates,
     ratesTimestamp,
     targetCurrency,
     targetRate,
-    targetDecimalCharacter,
+    // targetDecimalCharacter,
     targetInputValue
   } = state;
 
@@ -59,19 +57,9 @@ const MoneyExchange = () => {
     if (!hasError && !isbaseEmpty) {
       const targetValue = MoneyHelper.convert(baseInputValue, baseRate, targetRate);
 
-      console.log({ targetValue });
-
       dispatch(moneyExchangeActions.setTargetValue(targetValue.formated));
     }
   };
-
-  // if (isFetching) {
-  //   return (
-  //     <Dimmer active>
-  //       <Loader />
-  //     </Dimmer>
-  //   )
-  // }
 
   return (
     <Profiler id="MoneyExhcange" onRender={console.info}>
