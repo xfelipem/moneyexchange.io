@@ -1,10 +1,8 @@
-import React, { useEffect, useReducer } from 'react';
+import React, { useEffect, useReducer, Profiler } from 'react';
 import { Segment, Grid, Form, Dimmer, Loader } from 'semantic-ui-react';
 import {
   validateNumericWithDecimals,
   validateDecimalQuantity,
-  getReversedDecimalIndex,
-  reverseString
 } from '../helpers';
 import MoneyHelper from '../helpers/money'
 import { moneyExchangeReducer, moneyExchangeInitialState } from '../state/reducers';
@@ -59,14 +57,11 @@ const MoneyExchange = () => {
     const isbaseEmpty = baseInputValue === '';
 
     if (!hasError && !isbaseEmpty) {
-      const targetValue = MoneyHelper.convert(baseInputValue, targetCurrency, rates);
-      const reversed = reverseString(`${targetValue.amount}`);
+      const targetValue = MoneyHelper.convert(baseInputValue, baseRate, targetRate);
 
-      const amountWithDecimals = reverseString(
-        reversed.slice(0, targetValue.decimalPrecision) + '.' + reversed.slice(targetValue.decimalPrecision)
-      );
+      console.log({ targetValue });
 
-      dispatch(moneyExchangeActions.setTargetValue(amountWithDecimals));
+      dispatch(moneyExchangeActions.setTargetValue(targetValue.formated));
     }
   };
 
@@ -79,42 +74,45 @@ const MoneyExchange = () => {
   // }
 
   return (
-    <Segment style={{ padding: '5em' }} vertical>
-      <Form>
-        <Grid columns='equal' stackable>
-          <Grid.Row textAlign='center'>
-            <Grid.Column textAlign='right' style={{ paddingRight: '5em' }}>
-              <Form.Input
-                fluid
-                placeholder={baseCurrency}
-                error={hasError ? error : false}
-                value={baseInputValue}
-                onChange={handleBaseCurrencyChange}
-              />
-            </Grid.Column>
-            <Grid.Column textAlign='left' style={{ paddingLeft: '5em' }}>
-              <Form.Input
-                fluid
-                readOnly
-                placeholder={targetCurrency}
-                value={targetInputValue}
-              />
-            </Grid.Column>
-          </Grid.Row>
-          <Grid.Row textAlign='center'>
-            <Grid.Column>
-              <Form.Button
-                style={{ width: '30vw' }}
-                content='Let me know!'
-                icon='right arrow'
-                labelPosition='right'
-                onClick={handleClick}
-              />
-            </Grid.Column>
-          </Grid.Row>
-        </Grid>
-      </Form>
-    </Segment>
+    <Profiler id="MoneyExhcange" onRender={console.info}>
+      <Segment style={{ padding: '5em' }} vertical>
+        <Form>
+          <Grid columns='equal' stackable>
+            <Grid.Row textAlign='center'>
+              <Grid.Column textAlign='right' style={{ paddingRight: '5em' }}>
+                <Form.Input
+                  fluid
+                  placeholder={baseCurrency}
+                  error={hasError ? error : false}
+                  value={baseInputValue}
+                  onChange={handleBaseCurrencyChange}
+                />
+              </Grid.Column>
+              <Grid.Column textAlign='left' style={{ paddingLeft: '5em' }}>
+                <Form.Input
+                  fluid
+                  readOnly
+                  placeholder={targetCurrency}
+                  value={targetInputValue}
+                />
+              </Grid.Column>
+            </Grid.Row>
+            <Grid.Row textAlign='center'>
+              <Grid.Column>
+                <Form.Button
+                  style={{ width: '30vw' }}
+                  content='Let me know!'
+                  icon='right arrow'
+                  labelPosition='right'
+                  onClick={handleClick}
+                />
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
+        </Form>
+      </Segment>
+    </Profiler>
+
   );
 }
 
