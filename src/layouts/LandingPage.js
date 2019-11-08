@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Profiler } from 'react'
 import Footer from '../components/Footer';
 import ResponsiveContainer from '../components/Responsive';
 import MoneyExchange from '../containers/MoneyExchange';
@@ -6,10 +6,12 @@ import MoneyExchange from '../containers/MoneyExchange';
 const LandingPage = () => {
 
   return (
-    <ResponsiveContainer>
-      <MoneyExchange />
-      <Footer />
-    </ResponsiveContainer>
+    <Profiler id="LandingPage" onRender={console.info}>
+      <ResponsiveContainer>
+        <MoneyExchange />
+        <Footer />
+      </ResponsiveContainer>
+    </Profiler>
   )
 };
 export default LandingPage;
