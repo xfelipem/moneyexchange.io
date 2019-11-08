@@ -1,23 +1,21 @@
 import Axios from 'axios';
 import { validateMinuteDifference } from '../helpers';
 import moneyExchangeActions from './actions';
-
-const API_REFRESH_TIME = 10;
-
+import appConfiguration from '../configuration'
+const { API_ACCESS_KEY, API_RESPONSE_LIFE } = appConfiguration.api
 const getRatesEndpoint = (accessKey) => `http://data.fixer.io/api/latest?access_key=${accessKey}`;
 
 async function fetchRates(payload) {
 
   try {
     const {
-      accessKey = '33b23d6e01efe285daf21f65e1124757',
       timestamp,
       dispatch
     } = payload;
-    const mustUpdateRates = !validateMinuteDifference(API_REFRESH_TIME, timestamp);
+    const mustUpdateRates = !validateMinuteDifference(API_RESPONSE_LIFE, timestamp);
 
     if (mustUpdateRates) {
-      const responsePromise = await Axios.get(getRatesEndpoint(accessKey));
+      const responsePromise = await Axios.get(getRatesEndpoint(API_ACCESS_KEY));
       const { data } = responsePromise;
       const { base, rates, timestamp } = data;
 
