@@ -1,17 +1,18 @@
 import React from 'react';
-import { Form } from 'semantic-ui-react';
+import { Input } from 'semantic-ui-react';
 
-const MoneyInput = (props) => {
-  const { baseValue, error, isEditable, onChange } = props;
+const MoneyInput = props => {
+  const { currency, error, value, onChange, readOnly } = props;
 
   return (
-    <Form.Input
+    <Input
       fluid
-      placeholder='EUR'
+      readOnly={readOnly}
+      placeholder={currency.id}
       error={error}
-      value={baseValue}
-      readOnly={isEditable}
+      value={value}
       onChange={onChange}
+      label={currency.character}
     />
   );
 };
