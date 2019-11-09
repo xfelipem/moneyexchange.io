@@ -6,9 +6,9 @@ export default {
   },
   exchange: {
     DEFAULT_CURRENCY: 'EUR',
-    DECIMAL_PRECISION: 4
+    DECIMAL_PRECISION: 4,
   },
   landing: {
-    title: 'Money Exchange'
-  }
+    title: 'Money Exchange',
+  },
 };

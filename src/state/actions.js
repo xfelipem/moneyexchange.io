@@ -1,5 +1,3 @@
-
-
 export const moneyExchangeActions = {
   /** ACTION TYPES */
   SET_RATES: 'SET_RATES',
@@ -11,21 +9,21 @@ export const moneyExchangeActions = {
     type: moneyExchangeActions.SET_RATES,
     baseCurrency,
     rates,
-    ratesTimestamp
+    ratesTimestamp,
   }),
-  setBaseValue: (baseValue) => ({
+  setBaseValue: baseValue => ({
     type: moneyExchangeActions.SET_BASE_VALUE,
-    baseValue
+    baseValue,
   }),
-  setTargetValue: (targetValue) => ({
+  setTargetValue: targetValue => ({
     type: moneyExchangeActions.SET_TARGET_VALUE,
-    targetValue
+    targetValue,
   }),
   showError: (errorMessage, baseValue) => ({
     type: moneyExchangeActions.SHOW_ERROR,
     baseValue,
-    errorMessage
-  })
+    errorMessage,
+  }),
 };
 
-export default moneyExchangeActions
+export default moneyExchangeActions;
