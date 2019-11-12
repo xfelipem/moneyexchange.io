@@ -1,7 +1,8 @@
 import Axios from 'axios';
-import { validateMinuteDifference } from '../helpers';
 import moneyExchangeActions from './actions';
 import appConfiguration from '../configuration';
+import { validateMinuteDifference } from '../helpers/validation';
+
 const { API_ACCESS_KEY, API_RESPONSE_LIFE } = appConfiguration.api;
 const getRatesEndpoint = accessKey =>
   `http://data.fixer.io/api/latest?access_key=${accessKey}`;
@@ -30,6 +31,7 @@ async function fetchRates(payload) {
 
     const { base, rates, timestamp: ratesTimestamp } =
       JSON.parse(localStorage.getItem('storedRates')) || {};
+
     dispatch(moneyExchangeActions.setRates(base, rates, ratesTimestamp));
   } catch (error) {
     console.error(error);

@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { Segment, Container, Responsive, Sidebar, Menu } from 'semantic-ui-react';
 import LandingHeader from './Header';
-import { getWidth } from '../helpers';
+import { getWidth } from '../helpers/semantic-ui';
 
 class MobileContainer extends Component {
   state = {}

@@ -1,16 +1,8 @@
 import React from 'react';
 import { Dropdown } from 'semantic-ui-react';
+import { transformObjectToSemanticUiPayload } from '../helpers/semantic-ui';
 
-const transformRatesToSemanticUiPayload = (rawRates) => Object.keys(rawRates)
-  .map((moneyType) => {
-    return {
-      key: moneyType,
-      text: moneyType,
-      value: moneyType
-    }
-  });
-
-const MoneyDropdown = (props) => {
+const MoneyDropdown = props => {
   const { baseCurrency, isEditable, rates } = props;
 
   return (
@@ -18,7 +10,7 @@ const MoneyDropdown = (props) => {
       defaultValue={baseCurrency}
       labelposition={isEditable ? 'right' : 'left'}
       placeholder={baseCurrency}
-      options={transformRatesToSemanticUiPayload(rates)}
+      options={transformObjectToSemanticUiPayload(rates)}
     />
   );
 };
