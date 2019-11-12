@@ -40,7 +40,7 @@ export const moneyExchangeReducer = (
       });
     case moneyExchangeActions.SHOW_ERROR:
       return Object.assign({}, state, {
-        error: true, //{ content: action.errorMessage },
+        error: true,
         baseInputValue: action.baseValue
       });
     default:

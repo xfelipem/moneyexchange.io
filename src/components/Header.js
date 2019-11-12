@@ -15,14 +15,14 @@ const LandingHeader = ({ mobile }) => (
         fontSize: mobile ? '2em' : '3em',
         fontWeight: 'normal',
         marginBottom: 0,
-        margin: mobile ? '1.5em' : '1em',
+        margin: mobile ? '1.5em' : '1em'
       }}
     />
   </Container>
 );
 
 LandingHeader.propTypes = {
-  mobile: PropTypes.bool,
+  mobile: PropTypes.bool
 };
 
 export default LandingHeader;
