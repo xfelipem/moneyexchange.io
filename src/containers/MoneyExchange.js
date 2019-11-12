@@ -1,9 +1,5 @@
-import React, { useEffect, useReducer, Profiler } from 'react';
-import { Segment, Grid, Form, Input, Button } from 'semantic-ui-react';
-import {
-  validateNumericWithDecimals,
-  validateDecimalQuantity
-} from '../helpers';
+import React, { useEffect, useMemo, useReducer } from 'react';
+import { Segment, Grid, Button } from 'semantic-ui-react';
 import MoneyHelper from '../helpers/money';
 import {
   moneyExchangeReducer,
@@ -12,6 +8,10 @@ import {
 import { moneyExchangeActions } from '../state/actions';
 import fetchRates from '../state/fetchers';
 import MoneyInput from '../components/MoneyInput';
+import {
+  validateNumericWithDecimals,
+  validateDecimalQuantity
+} from '../helpers/validation';
 
 const MoneyExchange = () => {
   const [state, dispatch] = useReducer(
@@ -30,6 +30,14 @@ const MoneyExchange = () => {
     targetRate,
     targetInputValue
   } = state;
+
+  const formatedExchangedValue = useMemo(() => {
+    if (error || baseInputValue === '') {
+      return '';
+    }
+
+    return MoneyHelper.convert(baseInputValue, baseRate, targetRate).formated;
+  }, [baseInputValue, baseRate, targetRate, error]);
 
   useEffect(() => {
     fetchRates({
@@ -67,20 +75,16 @@ const MoneyExchange = () => {
   };
 
   const handleClick = () => {
+    if (error) {
+      return;
+    }
+
     if (baseInputValue === '') {
       dispatch(moneyExchangeActions.setTargetValue(''));
       return;
     }
 
-    if (!error) {
-      const targetValue = MoneyHelper.convert(
-        baseInputValue,
-        baseRate,
-        targetRate
-      );
-
-      dispatch(moneyExchangeActions.setTargetValue(targetValue.formated));
-    }
+    dispatch(moneyExchangeActions.setTargetValue(formatedExchangedValue));
   };
 
   return (
