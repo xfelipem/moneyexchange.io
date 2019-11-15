@@ -5,7 +5,7 @@ const storedState = JSON.parse(localStorage.getItem('storedRates')) || {};
 export const moneyExchangeInitialState = {
   isFetching: true,
   error: false,
-  baseCurrency: storedState.base,
+  baseCurrency: storedState.base || 'EUR',
   baseRate: 1,
   baseDecimalCharacter: ',',
   baseInputValue: '',
