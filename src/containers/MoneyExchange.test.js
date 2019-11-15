@@ -1,115 +1,153 @@
+import '@testing-library/jest-dom/extend-expect';
 import React from 'react';
-import Enzyme, { shallow } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
-import MoneyExchange from './MoneyExchange';
-import { Button } from 'semantic-ui-react';
-import MoneyInput from '../components/MoneyInput';
+import { render, fireEvent, act } from '@testing-library/react';
+import Axios from 'axios';
+import ratesResponse from '../mockups/ratesResponse.json';
+import MoneyExchange from './MoneyExchange.js';
+import { getRatesEndpoint } from '../state/fetchers.js';
 
-Enzyme.configure({ adapter: new Adapter() });
+jest.mock('axios');
 
-test('€1000 Should be converted to $1106.55', () => {
-  // Render a checkbox with label in the document
-  const moneyExchange = shallow(<MoneyExchange />);
-
-  moneyExchange
-    .find(MoneyInput)
-    .first()
-    .simulate('change', {
-      target: { value: '1000' }
-    });
-  moneyExchange.find(Button).simulate('click');
-
-  expect(moneyExchange.find(MoneyInput).get(1).props.value).toEqual('1106.55');
-});
-
-test('€1000000000000000 Should be converted to $1,1065 x 10^25', () => {
-  // Render a checkbox with label in the document
-  const moneyExchange = shallow(<MoneyExchange />);
-
-  moneyExchange
-    .find(MoneyInput)
-    .first()
-    .simulate('change', {
-      target: { value: '100000000000000000000' }
-    });
-  moneyExchange.find(Button).simulate('click');
-
-  expect(moneyExchange.find(MoneyInput).get(1).props.value).toEqual(
-    '1.1066 x 10^25'
-  );
-});
-
-test('€0,0001 Should be converted to $0.1107', () => {
-  // Render a checkbox with label in the document
-  const moneyExchange = shallow(<MoneyExchange />);
-
-  moneyExchange
-    .find(MoneyInput)
-    .first()
-    .simulate('change', {
-      target: { value: '0,0001' }
-    });
-  moneyExchange.find(Button).simulate('click');
-
-  expect(moneyExchange.find(MoneyInput).get(1).props.value).toEqual('0.1107');
-});
-
-test('If base is empty, should reset exchange input when click the button', () => {
-  // Render a checkbox with label in the document
-  const moneyExchange = shallow(<MoneyExchange />);
-
-  moneyExchange
-    .find(MoneyInput)
-    .first()
-    .simulate('change', {
-      target: { value: '' }
+describe('MoneyExchange', () => {
+  test('Updates the rates successfully', async () => {
+    Axios.get.mockResolvedValueOnce({
+      data: ratesResponse
     });
 
-  moneyExchange.find(Button).simulate('click');
-
-  expect(moneyExchange.find(MoneyInput).get(1).props.value).toEqual('');
-});
-
-test('€100.1 Should display an error', () => {
-  // Render a checkbox with label in the document
-  const moneyExchange = shallow(<MoneyExchange />);
-
-  moneyExchange
-    .find(MoneyInput)
-    .first()
-    .simulate('change', {
-      target: { value: '100.1' }
+    await act(async () => {
+      await render(<MoneyExchange />);
     });
 
-  expect(moneyExchange.find(MoneyInput).get(0).props.error).toEqual(true);
-});
+    expect(Axios.get).toHaveBeenCalledTimes(1);
+    expect(Axios.get).toHaveBeenCalledWith(getRatesEndpoint());
+    expect(JSON.parse(localStorage.getItem('storedRates')).rates).toEqual(
+      ratesResponse.rates
+    );
+  });
 
-test('€1,00001 Should display an error', () => {
-  // Render a checkbox with label in the document
-  const moneyExchange = shallow(<MoneyExchange />);
-
-  moneyExchange
-    .find(MoneyInput)
-    .first()
-    .simulate('change', {
-      target: { value: '1,00001' }
+  test('€1000 Should be converted to $1106.55', async () => {
+    Axios.get.mockResolvedValueOnce({
+      data: ratesResponse
     });
 
-  expect(moneyExchange.find(MoneyInput).get(0).props.error).toEqual(true);
-});
+    await act(async () => {
+      const { getByPlaceholderText, getByText } = await render(
+        <MoneyExchange />
+      );
+      fireEvent.change(getByPlaceholderText('EUR'), {
+        target: { value: '1000' }
+      });
+      fireEvent.click(getByText('Let me know!'));
 
-test('If there is an error, should not not calculate the exchange when click the button', () => {
-  // Render a checkbox with label in the document
-  const moneyExchange = shallow(<MoneyExchange />);
-
-  moneyExchange
-    .find(MoneyInput)
-    .first()
-    .simulate('change', {
-      target: { value: '1,00001' }
+      expect(getByPlaceholderText('USD').value).toEqual('1106.55');
     });
-    
-  moneyExchange.find(Button).simulate('click');
+  });
 
-  expect(moneyExchange.find(MoneyInput).get(1).props.value).toEqual('');
+  test('€1000000000000000 Should be converted to $1,1065 x 10^25', async () => {
+    Axios.get.mockResolvedValueOnce({
+      data: ratesResponse
+    });
+
+    await act(async () => {
+      const { getByPlaceholderText, getByText } = await render(
+        <MoneyExchange />
+      );
+      fireEvent.change(getByPlaceholderText('EUR'), {
+        target: { value: '100000000000000000000' }
+      });
+      fireEvent.click(getByText('Let me know!'));
+
+      expect(getByPlaceholderText('USD').value).toEqual('1.1066 x 10^25');
+    });
+  });
+
+  test('€0,0001 Should be converted to $0.1107', async () => {
+    Axios.get.mockResolvedValueOnce({
+      data: ratesResponse
+    });
+
+    await act(async () => {
+      const { getByPlaceholderText, getByText } = await render(
+        <MoneyExchange />
+      );
+      fireEvent.change(getByPlaceholderText('EUR'), {
+        target: { value: '0,0001' }
+      });
+      fireEvent.click(getByText('Let me know!'));
+
+      expect(getByPlaceholderText('USD').value).toEqual('0.1107');
+    });
+  });
+
+  test('If base is empty, should reset exchange input when click the button', async () => {
+    Axios.get.mockResolvedValueOnce({
+      data: ratesResponse
+    });
+
+    await act(async () => {
+      const { getByPlaceholderText, getByText } = await render(
+        <MoneyExchange />
+      );
+      fireEvent.change(getByPlaceholderText('EUR'), {
+        target: { value: '' }
+      });
+      fireEvent.click(getByText('Let me know!'));
+
+      expect(getByPlaceholderText('USD').value).toEqual('');
+    });
+  });
+
+  test('€100.1 Should display an error', async () => {
+    Axios.get.mockResolvedValueOnce({
+      data: ratesResponse
+    });
+
+    await act(async () => {
+      const { getByPlaceholderText } = await render(<MoneyExchange />);
+      const baseCurrencyInput = getByPlaceholderText('EUR');
+      const inputContainer = baseCurrencyInput.parentNode;
+
+      fireEvent.change(baseCurrencyInput, {
+        target: { value: '100.1' }
+      });
+
+      expect(inputContainer.classList.contains('error')).toEqual(true);
+    });
+  });
+
+  test('€1,00001 Should display an error', async () => {
+    Axios.get.mockResolvedValueOnce({
+      data: ratesResponse
+    });
+
+    await act(async () => {
+      const { getByPlaceholderText } = await render(<MoneyExchange />);
+      const baseCurrencyInput = getByPlaceholderText('EUR');
+      const inputContainer = baseCurrencyInput.parentNode;
+
+      fireEvent.change(baseCurrencyInput, {
+        target: { value: '1,00001' }
+      });
+
+      expect(inputContainer.classList.contains('error')).toEqual(true);
+    });
+  });
+
+  test('If there is an error, should not not calculate the exchange when click the button', async () => {
+    Axios.get.mockResolvedValueOnce({
+      data: ratesResponse
+    });
+
+    await act(async () => {
+      const { getByPlaceholderText } = await render(<MoneyExchange />);
+      const baseCurrencyInput = getByPlaceholderText('EUR');
+      const targetCurrencyInput = getByPlaceholderText('USD');
+
+      fireEvent.change(baseCurrencyInput, {
+        target: { value: '1,00001' }
+      });
+
+      expect(targetCurrencyInput.value).toEqual('');
+    });
+  });
 });
