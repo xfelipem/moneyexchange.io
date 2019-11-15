@@ -3,7 +3,6 @@
 Money exchange tool.
 
 # Table of Contents
-- [Table of Contents](#table-of-contents)
 - [Install](#install)
   - [NPM](#npm)
   - [Yarn](#yarn)
