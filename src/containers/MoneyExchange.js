@@ -1,18 +1,28 @@
+/**
+ * CurrencyExchange
+ * Container whichs handles the logic to exchange between currencies.
+ */
 import React, { useEffect, useMemo, useReducer } from 'react';
-import { Segment, Grid, Button } from 'semantic-ui-react';
-import MoneyHelper from '../helpers/money';
 import {
   moneyExchangeReducer,
   moneyExchangeInitialState
 } from '../state/reducers';
 import { moneyExchangeActions } from '../state/actions';
 import fetchRates from '../state/fetchers';
-import MoneyInput from '../components/MoneyInput';
+import MoneyHelper from '../helpers/money';
 import {
   validateNumericWithDecimals,
   validateDecimalQuantity
 } from '../helpers/validation';
+import CurrencyExchange from '../components/CurrencyExchange';
+import './money-exchange.css';
 
+/**
+ * This container handles the user interaction and the data fetching required to exchange between
+ * currencies. If you need to check the display logic you can see CurrencyExchange component.
+ *
+ * @returns {Component}
+ */
 const MoneyExchange = () => {
   const [state, dispatch] = useReducer(
     moneyExchangeReducer,
@@ -88,38 +98,15 @@ const MoneyExchange = () => {
   };
 
   return (
-    <Segment style={{ padding: '5em' }} vertical>
-      <Grid columns="equal" stackable>
-        <Grid.Row textAlign="center">
-          <Grid.Column textAlign="right" style={{ paddingRight: '5em' }}>
-            <MoneyInput
-              currency={{ id: baseCurrency, character: '€' }}
-              error={error}
-              value={baseInputValue}
-              onChange={handleBaseCurrencyChange}
-            />
-          </Grid.Column>
-          <Grid.Column textAlign="left" style={{ paddingLeft: '5em' }}>
-            <MoneyInput
-              readOnly
-              currency={{ id: targetCurrency, character: '$' }}
-              value={targetInputValue}
-            />
-          </Grid.Column>
-        </Grid.Row>
-        <Grid.Row textAlign="center">
-          <Grid.Column>
-            <Button
-              style={{ width: '30vw' }}
-              content="Let me know!"
-              icon="right arrow"
-              labelPosition="right"
-              onClick={handleClick}
-            />
-          </Grid.Column>
-        </Grid.Row>
-      </Grid>
-    </Segment>
+    <CurrencyExchange
+      baseCurrency={baseCurrency}
+      baseInputValue={baseInputValue}
+      error={error}
+      handleBaseCurrencyChange={handleBaseCurrencyChange}
+      handleClick={handleClick}
+      targetCurrency={targetCurrency}
+      targetInputValue={targetInputValue}
+    />
   );
 };
 
