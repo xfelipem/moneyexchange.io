@@ -1,14 +1,19 @@
+/**
+ * Mobile
+ * High Order Component which handles desktop views.
+ */
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { Responsive, Visibility, Segment } from 'semantic-ui-react';
-import LandingHeader from '../components/Header';
-import { getWidth } from '../helpers/semantic-ui';
+import Header from '../components/Header';
+import { getMinWidth } from '../helpers/semantic-ui';
 
-/* Heads up!
- * Neither Semantic UI nor Semantic UI React offer a responsive navbar, however, it can be implemented easily.
- * It can be more complicated, but you can create really flexible markup.
+/**
+ * High Order Component which handles the display of components used in the desktop view.
+ *
+ * @returns {Component}
  */
-class DesktopContainer extends Component {
+class DesktopHoc extends Component {
   state = {};
 
   hideFixedMenu = () => this.setState({ fixed: false });
@@ -18,7 +23,7 @@ class DesktopContainer extends Component {
     const { children } = this.props;
 
     return (
-      <Responsive getWidth={getWidth} minWidth={Responsive.onlyTablet.minWidth}>
+      <Responsive getWidth={getMinWidth} minWidth={getMinWidth()}>
         <Visibility
           once={false}
           onBottomPassed={this.showFixedMenu}
@@ -30,7 +35,7 @@ class DesktopContainer extends Component {
             style={{ minHeight: '35vh', padding: '1em 0em' }}
             vertical
           >
-            <LandingHeader />
+            <Header />
           </Segment>
         </Visibility>
 
@@ -40,8 +45,8 @@ class DesktopContainer extends Component {
   }
 }
 
-DesktopContainer.propTypes = {
+DesktopHoc.propTypes = {
   children: PropTypes.node
 };
 
-export default DesktopContainer;
+export default DesktopHoc;

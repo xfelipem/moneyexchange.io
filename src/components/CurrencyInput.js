@@ -1,7 +1,17 @@
+/**
+ * CurrencyInput
+ * This layer allow us to scalate the features related to select different bases and target
+ * currencies.
+ */
 import React from 'react';
 import { Input } from 'semantic-ui-react';
 
-const MoneyInput = props => {
+/**
+ * Component which works as a data transformer, taking the currency object as a property
+ *
+ * @returns {Component}
+ */
+const CurrencyInput = props => {
   const { currency, error, value, onChange, readOnly } = props;
 
   return (
@@ -17,4 +27,4 @@ const MoneyInput = props => {
   );
 };
 
-export default MoneyInput;
+export default CurrencyInput;

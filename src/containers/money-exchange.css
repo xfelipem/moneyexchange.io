@@ -1,0 +1,7 @@
+.ui.input.error > .ui.label {
+  border: 1px solid rgba(34, 36, 38, 0.15);
+  background-color: #fff6f6;
+  border-color: #e0b4b4;
+  color: #9f3a38;
+  box-shadow: none;
+}

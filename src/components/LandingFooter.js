@@ -1,7 +1,17 @@
+/**
+ * LandingFooter
+ * Component with hardcoded information to display a footer similar to the provided designs
+ */
 import React from 'react';
 import { Segment, Container, Grid, Header, List } from 'semantic-ui-react';
 
-const Footer = () => {
+/**
+ * A footer stolen from the examples provided by the semantic ui documentation whit beautiful
+ * hardcoded data.
+ *
+ * @returns {Component}
+ */
+const LandingFooter = () => {
   return (
     <Segment inverted vertical style={{ padding: '5em 0em' }}>
       <Container>
@@ -38,4 +48,4 @@ const Footer = () => {
   );
 };
 
-export default Footer;
+export default LandingFooter;
