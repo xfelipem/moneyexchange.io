@@ -4,7 +4,8 @@ import appConfiguration from '../configuration';
 import { validateMinuteDifference } from '../helpers/validation';
 
 const { API_ACCESS_KEY, API_RESPONSE_LIFE } = appConfiguration.api;
-const getRatesEndpoint = accessKey =>
+
+export const getRatesEndpoint = (accessKey = API_ACCESS_KEY) =>
   `http://data.fixer.io/api/latest?access_key=${accessKey}`;
 
 async function fetchRates(payload) {
@@ -16,7 +17,7 @@ async function fetchRates(payload) {
     );
 
     if (mustUpdateRates) {
-      const responsePromise = await Axios.get(getRatesEndpoint(API_ACCESS_KEY));
+      const responsePromise = await Axios.get(getRatesEndpoint());
       const { data } = responsePromise;
       const { base, rates, timestamp } = data;
 
