@@ -3,8 +3,23 @@
 Money exchange tool.
 
 # Table of Contents
-1. [Install](#install)
-
+- [Table of Contents](#table-of-contents)
+- [Install](#install)
+  - [NPM](#npm)
+  - [Yarn](#yarn)
+- [What does this repo have](#what-does-this-repo-have)
+- [How the logic layers are organized](#how-the-logic-layers-are-organized)
+  - [App](#app)
+  - [Layouts](#layouts)
+  - [Containers](#containers)
+  - [High Order Components](#high-order-components)
+  - [Components](#components)
+  - [State](#state)
+  - [Helpers](#helpers)
+  - [Mockups](#mockups)
+  - [Configuration](#configuration)
+  - [Tests](#tests)
+**
 # Install
 
 First at all you must clone this repository:
@@ -50,10 +65,19 @@ yarn global add serve
 serve -s build
 ```
 
-# Proyect setup
+# What does this repo have
 
-1. Tests, the container with the main feature is fully tested using [Jest](https://jestjs.io/) [Testing Library](https://testing-library.com/) as [suggested by the react team](https://reactjs.org/docs/testing.html#tools).
-2. Proyect setup using [Create React App](https://create-react-app.dev/) to avoid boilerplate code.
+1. Proyect setup using [Create React App](https://create-react-app.dev/) to avoid boilerplate code.
+2. Tests, the container with the main feature is fully tested using [Jest](https://jestjs.io/) [Testing Library](https://testing-library.com/) as [suggested by the react team](https://reactjs.org/docs/testing.html#tools).
+3. Asyncronous data fetching using [useEffect](https://reactjs.org/docs/hooks-reference.html#useeffect) hook
+4. Avoiding JavaScript issues realted to [floating points](https://modernweb.com/what-every-javascript-developer-should-know-about-floating-points/) stored in [IEEE 64 bit values](https://medium.com/@sarafecadu/64-bit-floating-point-a-javascript-story-fa6aad266665)
+5. Working with basic types such as Date, string an numbers doing computations.
+6. Multi-device suport, the app is responsive and fluid.
+7. Client side data storage, the API is only called when there is a chance the data is updated.
+8. Error display on unwanted user actions.
+9. Examples of state managment using [useReducer](https://reactjs.org/docs/hooks-reference.html#usereducer) hook.
+10. Memoized heavy computation using [useMemo](https://reactjs.org/docs/hooks-reference.html#usememo) hook.
+
 
 # How the logic layers are organized
 ## App
@@ -80,6 +104,8 @@ The **reducers** are pipelines to change the state in a predictable way, actualy
 
 **Actions** are objects whichs provide information about what happen in the app, they are our access to the reducers and the [only way to change the state](https://redux.js.org/introduction/three-principles#state-is-read-only).
 
+I also added the **fetcher** concept to be able to centralize the logic related to the data obtaining, so the client component should not know where de data is comming from.
+
 ## Helpers
 These are groups of functions which handle secondary computations, and are not related to how to **display**, how to handle **user interactions**, or **server changes**. These concerns managed by the previous described logic layers.
 
@@ -91,14 +117,3 @@ Another kind onf mocked data but not necessarily server related information, her
 
 ## Tests
 The tests are end to end, but using a DOM tree testing library, so the test environment is [not similar to a browsers](https://reactjs.org/docs/testing.html).
-
-# What does this repo have
-
-1. Asyncronous data fetching using [useEffect](https://reactjs.org/docs/hooks-reference.html#useeffect) hook
-2. Avoiding JavaScript issues realted to [floating points](https://modernweb.com/what-every-javascript-developer-should-know-about-floating-points/) stored in [IEEE 64 bit values](https://medium.com/@sarafecadu/64-bit-floating-point-a-javascript-story-fa6aad266665)
-3. Working with basic types such as Date, string an numbers doing computations.
-4. Multi-device suport, the app is responsive and fluid.
-5. Client side data storage, the API is only called when there is a chance the data is updated.
-6. Error display on unwanted user actions.
-7. Examples of state managment using [useReducer](https://reactjs.org/docs/hooks-reference.html#usereducer) hook.
-8. Memoized heavy computation using [useMemo](https://reactjs.org/docs/hooks-reference.html#usememo) hook.
