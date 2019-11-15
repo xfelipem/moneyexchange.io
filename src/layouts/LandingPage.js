@@ -1,14 +1,23 @@
+/**
+ * LandingPage
+ * This is the first layout which will be seen by the user.
+ */
 import React from 'react';
-import Footer from '../components/Footer';
-import ResponsiveContainer from '../components/Responsive';
+import LandingFooter from '../components/LandingFooter';
+import ResponsiveHoc from '../hocs/Responsive';
 import MoneyExchange from '../containers/MoneyExchange';
 
+/**
+ * A responsive layout to contain the exchange component.
+ *
+ * @returns {Component}
+ */
 const LandingPage = () => {
   return (
-    <ResponsiveContainer>
+    <ResponsiveHoc>
       <MoneyExchange />
-      <Footer />
-    </ResponsiveContainer>
+      <LandingFooter />
+    </ResponsiveHoc>
   );
 };
 export default LandingPage;

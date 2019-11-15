@@ -1,28 +1,37 @@
+/**
+ * Header
+ */
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Header, Container } from 'semantic-ui-react';
+import { Header as SemanticHeader, Container } from 'semantic-ui-react';
 import appConfig from '../configuration';
 
-const { landing } = appConfig;
+const { title } = appConfig.landing;
+const getStyles = mobile => ({
+  fontSize: mobile ? '2em' : '3em',
+  fontWeight: 'normal',
+  marginBottom: 0,
+  margin: mobile ? '1.5em' : '1em'
+});
 
-const LandingHeader = ({ mobile }) => (
+/**
+ * A multi device header component.
+ *
+ * @returns {Component}
+ */
+const Header = ({ mobile }) => (
   <Container text>
-    <Header
+    <SemanticHeader
       as="h1"
-      content={landing.title}
+      content={title}
       inverted
-      style={{
-        fontSize: mobile ? '2em' : '3em',
-        fontWeight: 'normal',
-        marginBottom: 0,
-        margin: mobile ? '1.5em' : '1em'
-      }}
+      style={getStyles(mobile)}
     />
   </Container>
 );
 
-LandingHeader.propTypes = {
+Header.propTypes = {
   mobile: PropTypes.bool
 };
 
-export default LandingHeader;
+export default Header;
