@@ -97,7 +97,7 @@ They contain display logic, ussualy are statless but there are a few cases where
 ## State
 The state is handled using the [three base principles](https://redux.js.org/introduction/three-principles) of redux (based in  [Flux](http://facebook.github.io/flux), [CQRS](http://martinfowler.com/bliki/CQRS.html), and [Event Sourcing](http://martinfowler.com/eaaDev/EventSourcing.html)). From **Flux** is incomporated another concept, the _dispatcher_, provided by React [useReducer hook](https://reactjs.org/docs/hooks-reference.html#usereducer). See more in the [redux docs](https://redux.js.org/introduction/prior-art#flux).
 
-In this example the **state** is the one from our container because we do not need a centralized data store in other part of our app. Our single source of thr
+In this example the **state** is the one from our container because we do not need a centralized data store in other part of our app. Our single source of truth is located where is needed, no overengeenering here.
 
 The **reducers** are pipelines to change the state in a predictable way, actualy there is only one, directly related to the container.
 
