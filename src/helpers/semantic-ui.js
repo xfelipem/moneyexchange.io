@@ -1,7 +1,13 @@
 import { Responsive } from 'semantic-ui-react';
 
-export const getWidth = () => {
-  return Responsive.onlyTablet.minWidth;
+const { onlyTablet } = Responsive;
+
+export const getMaxWidth = () => {
+  return onlyTablet.maxWidth;
+};
+
+export const getMinWidth = () => {
+  return onlyTablet.minWidth;
 };
 
 export const transformObjectToSemanticUiPayload = rawRates =>
