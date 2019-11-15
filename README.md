@@ -18,7 +18,7 @@ Money exchange tool.
   - [Mockups](#mockups)
   - [Configuration](#configuration)
   - [Tests](#tests)
-**
+
 # Install
 
 First at all you must clone this repository:
@@ -67,7 +67,7 @@ serve -s build
 # What does this repo have
 
 1. Proyect setup using [Create React App](https://create-react-app.dev/) to avoid boilerplate code.
-2. Tests, the container with the main feature is fully tested using [Jest](https://jestjs.io/) [Testing Library](https://testing-library.com/) as [suggested by the react team](https://reactjs.org/docs/testing.html#tools).
+2. Tests, the container with the main feature is fully tested using [Jest](https://jestjs.io/) and [Testing Library](https://testing-library.com/) as [suggested by the react team](https://reactjs.org/docs/testing.html#tools).
 3. Asyncronous data fetching using [useEffect](https://reactjs.org/docs/hooks-reference.html#useeffect) hook
 4. Avoiding JavaScript issues realted to [floating points](https://modernweb.com/what-every-javascript-developer-should-know-about-floating-points/) stored in [IEEE 64 bit values](https://medium.com/@sarafecadu/64-bit-floating-point-a-javascript-story-fa6aad266665)
 5. Working with basic types such as Date, string an numbers doing computations.
