@@ -24,11 +24,11 @@ class MoneyHelper {
 
     if (validateIsExponential(amount)) {
       const exponentialNumber = this.transformToExponentialModel(amount);
-      const { decimalPrecision } = exponentialNumber;
+      const { decimalExponent } = exponentialNumber;
 
       const floatNumber = insertDecimalCharacter(
         exponentialNumber.amount,
-        decimalPrecision
+        decimalExponent
       );
 
       const formated = formatExponential(
@@ -42,25 +42,25 @@ class MoneyHelper {
       };
     }
 
-    const decimalPrecision =
-      integerBaseRate.decimalPrecision +
-      integerBaseAmount.decimalPrecision +
-      integerTargetCurrencyRate.decimalPrecision;
+    const decimalExponent =
+      integerBaseRate.decimalExponent +
+      integerBaseAmount.decimalExponent +
+      integerTargetCurrencyRate.decimalExponent;
 
-    const unitPrecision = getNumberLength(amount) - decimalPrecision;
+    const unitExponent = getNumberLength(amount) - decimalExponent;
 
-    const precision = unitPrecision + decimalPrecision;
+    const exponent = unitExponent + decimalExponent;
 
-    const floatNumber = insertDecimalCharacter(amount, decimalPrecision);
+    const floatNumber = insertDecimalCharacter(amount, decimalExponent);
     const formated = formatMoney(floatNumber, '.');
 
     return {
       amount,
-      decimalPrecision,
+      decimalExponent,
       floatNumber,
       formated,
-      precision,
-      unitPrecision
+      exponent,
+      unitExponent
     };
   }
 
@@ -68,23 +68,23 @@ class MoneyHelper {
     if (validateIsInteger(number)) {
       return {
         amount: number,
-        decimalPrecision: 0,
-        precision: 1
+        decimalExponent: 0,
+        exponent: 1
       };
     }
 
     const [units, decimals] = splitUnitsDecimals(number);
     const amount = parseInt(`${units}${decimals}`);
 
-    const unitPrecision = getNumberLength(units);
-    const decimalPrecision = getNumberLength(decimals);
-    const precision = unitPrecision + decimalPrecision;
+    const unitExponent = getNumberLength(units);
+    const decimalExponent = getNumberLength(decimals);
+    const exponent = unitExponent + decimalExponent;
 
     return {
       amount,
-      decimalPrecision,
-      precision,
-      unitPrecision
+      decimalExponent,
+      exponent,
+      unitExponent
     };
   }
 
@@ -99,10 +99,7 @@ class MoneyHelper {
     const exponent = parseInt(stringExponent);
     const integerModel = this.transformToIntegerModel(number);
 
-    return {
-      ...integerModel,
-      exponent
-    };
+    return Object.assign({}, integerModel, { exponent });
   }
 }
 
