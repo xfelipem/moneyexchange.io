@@ -1,0 +1,1 @@
+{"version":3,"sources":["money-exchange.css"],"names":[],"mappings":"AAAA,0BAEE,wBAAyB,CACzB,wBAAqB,CACrB,aAAc,CACd,eACF","file":"main.fb3091df.chunk.css","sourcesContent":[".ui.input.error > .ui.label {\n  border: 1px solid rgba(34, 36, 38, 0.15);\n  background-color: #fff6f6;\n  border-color: #e0b4b4;\n  color: #9f3a38;\n  box-shadow: none;\n}\n"]}

@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.css": "/moneyexchange.io/static/css/main.fb3091df.chunk.css",
+    "main.js": "/moneyexchange.io/static/js/main.8c568e23.chunk.js",
+    "main.js.map": "/moneyexchange.io/static/js/main.8c568e23.chunk.js.map",
+    "runtime-main.js": "/moneyexchange.io/static/js/runtime-main.73fc89b4.js",
+    "runtime-main.js.map": "/moneyexchange.io/static/js/runtime-main.73fc89b4.js.map",
+    "static/css/2.8b491c07.chunk.css": "/moneyexchange.io/static/css/2.8b491c07.chunk.css",
+    "static/js/2.4b05d808.chunk.js": "/moneyexchange.io/static/js/2.4b05d808.chunk.js",
+    "static/js/2.4b05d808.chunk.js.map": "/moneyexchange.io/static/js/2.4b05d808.chunk.js.map",
+    "index.html": "/moneyexchange.io/index.html",
+    "precache-manifest.d672d548b18f0a71c54e98b67817dac3.js": "/moneyexchange.io/precache-manifest.d672d548b18f0a71c54e98b67817dac3.js",
+    "service-worker.js": "/moneyexchange.io/service-worker.js",
+    "static/css/2.8b491c07.chunk.css.map": "/moneyexchange.io/static/css/2.8b491c07.chunk.css.map",
+    "static/css/main.fb3091df.chunk.css.map": "/moneyexchange.io/static/css/main.fb3091df.chunk.css.map",
+    "static/media/semantic.min.css": "/moneyexchange.io/static/media/outline-icons.ef60a4f6.woff"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.73fc89b4.js",
+    "static/css/2.8b491c07.chunk.css",
+    "static/js/2.4b05d808.chunk.js",
+    "static/css/main.fb3091df.chunk.css",
+    "static/js/main.8c568e23.chunk.js"
+  ]
+}
