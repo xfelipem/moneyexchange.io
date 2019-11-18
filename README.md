@@ -2,6 +2,8 @@
 
 Money exchange tool.
 
+[Try me here!](https://muramasah.github.io/moneyexchange.io/)
+
 # Table of Contents
 - [Install](#install)
   - [NPM](#npm)
